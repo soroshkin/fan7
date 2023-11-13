@@ -1,10 +1,12 @@
 package com.outfit7.fun7.service.user.infrastructure.mongo;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("userInfo")
 public class UserInfoEntity {
 
+  @Id
   private final String userId;
 
   private final String countryCode;

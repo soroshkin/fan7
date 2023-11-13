@@ -10,7 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Service
-class SupportService {
+class SupportFeatureService {
 
   private static final LocalTime SUPPORT_START_TIME = LocalTime.of(9, 0);
 
@@ -18,7 +18,7 @@ class SupportService {
 
   private final Clock supportServiceClock;
 
-  SupportService(Clock supportServiceClock) {
+  SupportFeatureService(Clock supportServiceClock) {
     this.supportServiceClock = supportServiceClock;
   }
 

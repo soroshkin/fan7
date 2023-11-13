@@ -10,20 +10,20 @@ public class ServiceCheckService implements ServiceCheckOperations {
 
   private final MultiplayerService multiplayerService;
 
-  private final SupportService supportService;
+  private final SupportFeatureService supportFeatureService;
 
   private final AdsService adsService;
 
-  public ServiceCheckService(MultiplayerService multiplayerService, SupportService supportService, AdsService adsService) {
+  public ServiceCheckService(MultiplayerService multiplayerService, SupportFeatureService supportFeatureService, AdsService adsService) {
     this.multiplayerService = multiplayerService;
-    this.supportService = supportService;
+    this.supportFeatureService = supportFeatureService;
     this.adsService = adsService;
   }
 
   @Override
   public UserFeatures getUserFeatures(String timezone, String userId, String countryCode) {
     FeatureState multiplayerFeatureState = multiplayerService.getMultiplayerFeatureState(userId, countryCode);
-    FeatureState supportFeatureState = supportService.getSupportFeatureState();
+    FeatureState supportFeatureState = supportFeatureService.getSupportFeatureState();
     FeatureState adsFeatureState = adsService.getAdsFeatureState(countryCode);
     return UserFeatures.builder()
       .withMultiplayer(multiplayerFeatureState)

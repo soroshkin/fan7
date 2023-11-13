@@ -19,21 +19,20 @@ dependencyManagement {
 
 ext {
   okHttpVersion = "10.10.1"
-  h2Version = "2.1.214"
+  embedMongoVersion = "4.10.1"
 }
 
 sourceCompatibility = 17
 targetCompatibility = 17
 
 dependencies {
-  implementation "org.springframework.boot:spring-boot-starter-parent"
-  implementation "org.springframework.boot:spring-boot-starter-web"
-  implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
-  implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
-  implementation "io.github.openfeign:feign-okhttp:${okHttpVersion}"
+  implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+  implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+  implementation("io.github.openfeign:feign-okhttp:${okHttpVersion}")
 
-  testImplementation "org.springframework.boot:spring-boot-starter-test"
-  testImplementation "com.h2database:h2:${h2Version}"
+  testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embedMongoVersion}")
 }
 
 test {
