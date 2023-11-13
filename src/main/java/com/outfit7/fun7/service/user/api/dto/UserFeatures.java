@@ -60,6 +60,7 @@ public class UserFeatures {
       return this;
     }
 
+    @JsonProperty("user-support")
     public Builder withUserSupport(FeatureState userSupport) {
       this.userSupport = userSupport;
       return this;
