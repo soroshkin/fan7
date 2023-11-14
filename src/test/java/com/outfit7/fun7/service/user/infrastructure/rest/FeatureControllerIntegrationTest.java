@@ -1,6 +1,6 @@
 package com.outfit7.fun7.service.user.infrastructure.rest;
 
-import com.outfit7.fun7.service.IntegrationTest;
+import com.outfit7.fun7.service.RestIntegrationTest;
 import com.outfit7.fun7.service.user.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.user.api.dto.FeatureState;
 import com.outfit7.fun7.service.user.api.dto.UserFeatures;
@@ -8,25 +8,18 @@ import com.outfit7.fun7.service.user.api.dto.UserInfoNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@AutoConfigureMockMvc
-class FeatureControllerIntegrationTest extends IntegrationTest {
+class FeatureControllerIntegrationTest extends RestIntegrationTest {
 
   private static final String FEATURES_URL = "/features/state?timezone={timezone}&userId={userId}&cc={cc}";
-
-  @Autowired
-  private MockMvc mockMvc;
 
   @MockBean
   private ServiceCheckOperations serviceCheckOperations;
