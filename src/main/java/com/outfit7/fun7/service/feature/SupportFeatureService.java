@@ -16,6 +16,8 @@ class SupportFeatureService {
 
   private static final LocalTime SUPPORT_END_TIME = LocalTime.of(15, 0);
 
+  private static final List<DayOfWeek> WORKDAYS = List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY);
+
   private final Clock supportServiceClock;
 
   SupportFeatureService(Clock supportServiceClock) {
@@ -38,8 +40,7 @@ class SupportFeatureService {
   }
 
   private boolean isWorkday(DayOfWeek dayOfWeek) {
-    List<DayOfWeek> workdays = List.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY);
-    return workdays.contains(dayOfWeek);
+    return WORKDAYS.contains(dayOfWeek);
   }
 
   private static boolean isWithinSupportHours(LocalTime currentTime) {

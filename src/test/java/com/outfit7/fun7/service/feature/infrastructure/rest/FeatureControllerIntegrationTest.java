@@ -19,10 +19,6 @@ import static org.mockito.Mockito.when;
 
 class FeatureControllerIntegrationTest extends RestIntegrationTest {
 
-  private static final String USERNAME = "user";
-
-  private static final String PASSWORD = "user";
-
   private static final String FEATURES_URL = "/features/state?timezone={timezone}&userId={userId}&cc={cc}";
 
   @MockBean

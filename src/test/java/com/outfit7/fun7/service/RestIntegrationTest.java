@@ -5,4 +5,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 @AutoConfigureMockMvc
 public class RestIntegrationTest extends IntegrationTest {
 
+  protected static final String USERNAME = "user";
+
+  protected static final String PASSWORD = "user";
 }

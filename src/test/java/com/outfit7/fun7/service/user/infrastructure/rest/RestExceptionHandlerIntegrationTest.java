@@ -30,7 +30,9 @@ class RestExceptionHandlerIntegrationTest extends RestIntegrationTest {
       .thenThrow(new UserNotFoundException("User not found"));
 
     // when
-    ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class);
+    ResponseEntity<String> response = testRestTemplate
+      .withBasicAuth(USERNAME, PASSWORD)
+      .getForEntity(FEATURES_URL, String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -45,7 +47,9 @@ class RestExceptionHandlerIntegrationTest extends RestIntegrationTest {
       .thenThrow(new ConstraintViolationException("Validation failed", null));
 
     // when
-    ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class);
+    ResponseEntity<String> response = testRestTemplate
+      .withBasicAuth(USERNAME, PASSWORD)
+      .getForEntity(FEATURES_URL, String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -60,7 +64,9 @@ class RestExceptionHandlerIntegrationTest extends RestIntegrationTest {
     when(serviceCheckOperations.getUserFeatures(any(), any(), any())).thenThrow(exception);
 
     // when
-    ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class);
+    ResponseEntity<String> response = testRestTemplate
+      .withBasicAuth(USERNAME, PASSWORD)
+      .getForEntity(FEATURES_URL, String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.GATEWAY_TIMEOUT);
