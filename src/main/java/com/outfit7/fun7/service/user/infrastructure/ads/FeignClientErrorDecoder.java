@@ -26,8 +26,8 @@ class FeignClientErrorDecoder implements ErrorDecoder {
   public Exception decode(String methodKey, Response response) {
     Optional<ErrorMessage> errorMessage = getErrorMessage(response);
     return new FeignClientException(response.status(),
-      errorMessage.map(ErrorMessage::getErrorCode).orElse(null),
-      errorMessage.map(ErrorMessage::getMessage).orElse(null));
+      errorMessage.map(ErrorMessage::getErrorCode).orElse(""),
+      errorMessage.map(ErrorMessage::getMessage).orElse(""));
   }
 
   private Optional<ErrorMessage> getErrorMessage(@Nullable Response response) {

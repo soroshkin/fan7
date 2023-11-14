@@ -4,13 +4,13 @@ import com.outfit7.fun7.service.IntegrationTest;
 import com.outfit7.fun7.service.user.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.user.api.dto.FeatureState;
 import com.outfit7.fun7.service.user.api.dto.UserFeatures;
+import com.outfit7.fun7.service.user.api.dto.UserInfoNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,14 +28,11 @@ class FeatureControllerIntegrationTest extends IntegrationTest {
   @Autowired
   private MockMvc mockMvc;
 
-  @Autowired
-  private TestRestTemplate testRestTemplate;
-
   @MockBean
   private ServiceCheckOperations serviceCheckOperations;
 
   @Test
-  void getUserFeatureState() {
+  void shouldGetUserFeatureState() {
     // given
     UserFeatures givenUserFeatures = UserFeatures.builder()
       .withMultiplayer(FeatureState.ENABLED)
@@ -61,6 +58,24 @@ class FeatureControllerIntegrationTest extends IntegrationTest {
     verify(serviceCheckOperations).getUserFeatures(timezone, userId, cc);
   }
 
+  @Test
+  void shouldReturn404WhenUserInfoNotFoundExceptionIsThrown() {
+    // given
+    String timezone = "CET";
+    String cc = "US";
+    String userId = "123";
+    String errorMessage = "user info not found";
+    when(serviceCheckOperations.getUserFeatures(anyString(), anyString(), anyString())).thenThrow(new UserInfoNotFoundException(errorMessage));
+
+    // when
+    ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class, timezone, userId, cc);
+
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    assertThat(response.getBody()).isNotNull().isEqualTo(errorMessage);
+    verify(serviceCheckOperations).getUserFeatures(timezone, userId, cc);
+  }
+
   @ParameterizedTest
   @CsvSource({
     ",,,",
@@ -68,7 +83,7 @@ class FeatureControllerIntegrationTest extends IntegrationTest {
     "CET,123,",
     ",123,US",
   })
-  void shouldReturnBadRequestWhenParametersNotSet(String timezone, String userId, String cc) {
+  void shouldReturnBadRequestWhenParametersAreAbsent(String timezone, String userId, String cc) {
     // when
     ResponseEntity<String> response = testRestTemplate.getForEntity("/features/state?timezone={timezone}&userId={userId}&cc={cc}",
       String.class,

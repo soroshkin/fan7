@@ -1,6 +1,7 @@
 package com.outfit7.fun7.service.user.infrastructure.ads;
 
 import feign.Feign;
+import feign.RequestInterceptor;
 import feign.Retryer;
 import feign.okhttp.OkHttpClient;
 import org.springframework.beans.factory.ObjectFactory;
@@ -28,16 +29,21 @@ class AdsFeatureStateFeignClientConfiguration {
   @ConditionalOnProperty({"fun7.o7tools.api.base-url"})
   AdsFeatureStateFeignClient adsFeatureStateFeignClient(@Value("${fun7.o7tools.api.base-url}") String baseUrl,
                                                         ObjectFactory<HttpMessageConverters> messageConverters,
-                                                        ObjectProvider<HttpMessageConverterCustomizer> messageConverterCustomizers) {
+                                                        ObjectProvider<HttpMessageConverterCustomizer> messageConverterCustomizers,
+                                                        RequestInterceptor authAdminHttpRequestInterceptor) {
     ResponseEntityDecoder decoder = new ResponseEntityDecoder(new SpringDecoder(messageConverters, messageConverterCustomizers));
-    SpringEncoder encoder = new SpringEncoder(messageConverters);
     return Feign.builder()
-      .encoder(encoder)
+      .encoder(new SpringEncoder(messageConverters))
       .decoder(decoder)
       .errorDecoder(new FeignClientErrorDecoder(decoder))
-//TODO      .requestInterceptor()
+      .requestInterceptor(authAdminHttpRequestInterceptor)
       .client(new OkHttpClient())
       .retryer(new Retryer.Default(DEFAULT_RETRYER_PERIOD, DEFAULT_RETRYER_MAX_PERIOD, DEFAULT_MAX_ATTEMPTS))
       .target(AdsFeatureStateFeignClient.class, baseUrl);
+  }
+
+  @Bean
+  public RequestInterceptor authAdminHttpRequestInterceptor(@Value("${fun7.o7tools.api.username}") String username, @Value("${fun7.o7tools.api.password}") String password) {
+    return new AuthAdminHttpRequestInterceptor(username, password);
   }
 }

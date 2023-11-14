@@ -1,6 +1,6 @@
 package com.outfit7.fun7.service.user.api.dto;
 
-public class FeignClientException extends Exception {
+public class FeignClientException extends RuntimeException {
 
   private final Integer statusCode;
 
