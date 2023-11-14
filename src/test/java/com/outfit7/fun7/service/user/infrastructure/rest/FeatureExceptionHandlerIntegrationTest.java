@@ -4,11 +4,12 @@ import com.outfit7.fun7.service.RestIntegrationTest;
 import com.outfit7.fun7.service.user.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.user.api.dto.AdsFeatureNotRetrievedException;
 import com.outfit7.fun7.service.user.api.dto.UserInfoNotFoundException;
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import javax.validation.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;

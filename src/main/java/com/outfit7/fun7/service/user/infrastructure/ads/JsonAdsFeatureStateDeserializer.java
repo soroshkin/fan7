@@ -19,7 +19,7 @@ public class JsonAdsFeatureStateDeserializer extends JsonDeserializer<Boolean> {
     return switch (adsValue) {
       case FEATURE_ENABLED -> true;
       case FEATURE_DISABLED -> false;
-      default -> throw new JsonParseException(String.format("Could not parse response: %s", adsValue));
+      default -> throw new JsonParseException(p, String.format("Could not parse response: %s", adsValue));
     };
   }
 }

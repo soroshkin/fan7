@@ -4,7 +4,6 @@ import com.outfit7.fun7.service.IntegrationTest;
 import com.outfit7.fun7.service.user.api.dto.AdsFeatureStateResponse;
 import com.outfit7.fun7.service.user.api.dto.FeignClientException;
 import com.xebialabs.restito.server.StubServer;
-import jakarta.annotation.PostConstruct;
 import org.glassfish.grizzly.http.Method;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
+import javax.annotation.PostConstruct;
 
 import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
 import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;

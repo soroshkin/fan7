@@ -2,11 +2,12 @@ package com.outfit7.fun7.service.user.infrastructure.rest;
 
 import com.outfit7.fun7.service.user.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.user.api.dto.UserFeatures;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.NotBlank;
 
 @RestController
 @Validated
