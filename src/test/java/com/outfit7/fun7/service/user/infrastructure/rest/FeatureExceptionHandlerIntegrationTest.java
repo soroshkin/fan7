@@ -3,7 +3,7 @@ package com.outfit7.fun7.service.user.infrastructure.rest;
 import com.outfit7.fun7.service.RestIntegrationTest;
 import com.outfit7.fun7.service.user.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.user.api.dto.AdsFeatureNotRetrievedException;
-import com.outfit7.fun7.service.user.api.dto.UserInfoNotFoundException;
+import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ class FeatureExceptionHandlerIntegrationTest extends RestIntegrationTest {
   void shouldHandleUserInfoNotFoundException() {
     // given
     when(serviceCheckOperations.getUserFeatures(any(), any(), any()))
-      .thenThrow(new UserInfoNotFoundException("User not found"));
+      .thenThrow(new UserNotFoundException("User not found"));
 
     // when
     ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class);

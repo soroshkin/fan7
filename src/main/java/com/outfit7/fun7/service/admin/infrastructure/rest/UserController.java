@@ -1,8 +1,7 @@
 package com.outfit7.fun7.service.admin.infrastructure.rest;
 
-import com.outfit7.fun7.service.admin.UserService;
-import com.outfit7.fun7.service.admin.api.dto.User;
-import com.outfit7.fun7.service.admin.api.dto.UserNotFoundException;
+import com.outfit7.fun7.service.admin.api.UserOperations;
+import com.outfit7.fun7.service.user.api.dto.User;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,25 +17,24 @@ import java.util.List;
 @RequestMapping("/admin/api/users")
 public class UserController {
 
-  private final UserService userService;
+  private final UserOperations userOperations;
 
-  public UserController(UserService userService) {
-    this.userService = userService;
+  public UserController(UserOperations userOperations) {
+    this.userOperations = userOperations;
   }
 
   @GetMapping
   public List<User> getAllUsers() {
-    return userService.getAllUsers();
+    return userOperations.getAllUsers();
   }
 
   @GetMapping("/{userId}")
   public User getUserDetails(@PathVariable @NotBlank String userId) {
-    return userService.getUserById(userId)
-      .orElseThrow(() -> new UserNotFoundException(String.format("User with id %s not found", userId)));
+    return userOperations.getUserById(userId);
   }
 
   @DeleteMapping("/{userId}")
   public String deleteUser(@PathVariable @NotBlank String userId) {
-    return userService.deleteUser(userId);
+    return userOperations.deleteUser(userId);
   }
 }

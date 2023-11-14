@@ -3,8 +3,8 @@ package com.outfit7.fun7.service.user.infrastructure.mongo;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("userInfo")
-public class UserInfoEntity {
+@Document("users")
+public class UserEntity {
 
   @Id
   private final String userId;
@@ -13,7 +13,7 @@ public class UserInfoEntity {
 
   private final int gameCount;
 
-  public UserInfoEntity(String userId, String countryCode, int gameCount) {
+  public UserEntity(String userId, String countryCode, int gameCount) {
     this.userId = userId;
     this.countryCode = countryCode;
     this.gameCount = gameCount;

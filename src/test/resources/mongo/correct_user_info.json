@@ -3,6 +3,6 @@
     "userId": "123",
     "countryCode": "US",
     "gameCount": 3,
-    "_class": "com.outfit7.fun7.service.user.infrastructure.mongo.UserInfoEntity"
+    "_class": "com.outfit7.fun7.service.user.infrastructure.mongo.UserEntity"
   }
 ]

@@ -1,9 +1,9 @@
 package com.outfit7.fun7.service.user;
 
 import com.outfit7.fun7.service.UnitTest;
-import com.outfit7.fun7.service.user.api.UserInfoStorageOperations;
+import com.outfit7.fun7.service.user.api.UserStorageOperations;
 import com.outfit7.fun7.service.user.api.dto.FeatureState;
-import com.outfit7.fun7.service.user.api.dto.UserInfo;
+import com.outfit7.fun7.service.user.api.dto.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 class MultiplayerServiceUnitTest extends UnitTest {
 
   @Mock
-  private UserInfoStorageOperations userInfoStorageOperations;
+  private UserStorageOperations userStorageOperations;
 
   @InjectMocks
   private MultiplayerService multiplayerService;
@@ -25,16 +25,16 @@ class MultiplayerServiceUnitTest extends UnitTest {
     // given
     String userId = "123";
     String countryCode = "US";
-    UserInfo userInfo = new UserInfo(userId, countryCode, 6);
+    User user = new User(userId, countryCode, 6);
 
-    when(userInfoStorageOperations.getUserInfo(userId)).thenReturn(userInfo);
+    when(userStorageOperations.getUser(userId)).thenReturn(user);
 
     // when
     FeatureState result = multiplayerService.getMultiplayerFeatureState(userId, countryCode);
 
     // then
     assertThat(result).isEqualTo(FeatureState.ENABLED);
-    verify(userInfoStorageOperations).getUserInfo(userId);
+    verify(userStorageOperations).getUser(userId);
   }
 
   @Test
@@ -42,16 +42,16 @@ class MultiplayerServiceUnitTest extends UnitTest {
     // given
     String userId = "456";
     String countryCode = "US";
-    UserInfo userInfo = new UserInfo(userId, countryCode, 3);
+    User user = new User(userId, countryCode, 3);
 
-    when(userInfoStorageOperations.getUserInfo(userId)).thenReturn(userInfo);
+    when(userStorageOperations.getUser(userId)).thenReturn(user);
 
     // when
     FeatureState result = multiplayerService.getMultiplayerFeatureState(userId, countryCode);
 
     // then
     assertThat(result).isEqualTo(FeatureState.DISABLED);
-    verify(userInfoStorageOperations).getUserInfo(userId);
+    verify(userStorageOperations).getUser(userId);
   }
 
   @Test
@@ -59,15 +59,15 @@ class MultiplayerServiceUnitTest extends UnitTest {
     // given
     String userId = "789";
     String countryCode = "CA";
-    UserInfo userInfo = new UserInfo(userId, countryCode, 6);
+    User user = new User(userId, countryCode, 6);
 
-    when(userInfoStorageOperations.getUserInfo(userId)).thenReturn(userInfo);
+    when(userStorageOperations.getUser(userId)).thenReturn(user);
 
     // when
     FeatureState result = multiplayerService.getMultiplayerFeatureState(userId, countryCode);
 
     // then
     assertThat(result).isEqualTo(FeatureState.DISABLED);
-    verify(userInfoStorageOperations).getUserInfo(userId);
+    verify(userStorageOperations).getUser(userId);
   }
 }

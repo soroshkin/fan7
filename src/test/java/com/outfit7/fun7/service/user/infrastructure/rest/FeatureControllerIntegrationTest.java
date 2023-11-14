@@ -4,7 +4,7 @@ import com.outfit7.fun7.service.RestIntegrationTest;
 import com.outfit7.fun7.service.user.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.user.api.dto.FeatureState;
 import com.outfit7.fun7.service.user.api.dto.UserFeatures;
-import com.outfit7.fun7.service.user.api.dto.UserInfoNotFoundException;
+import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -58,7 +58,7 @@ class FeatureControllerIntegrationTest extends RestIntegrationTest {
     String cc = "US";
     String userId = "123";
     String errorMessage = "user info not found";
-    when(serviceCheckOperations.getUserFeatures(anyString(), anyString(), anyString())).thenThrow(new UserInfoNotFoundException(errorMessage));
+    when(serviceCheckOperations.getUserFeatures(anyString(), anyString(), anyString())).thenThrow(new UserNotFoundException(errorMessage));
 
     // when
     ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class, timezone, userId, cc);

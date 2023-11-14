@@ -2,8 +2,8 @@ package com.outfit7.fun7.service.admin.infrastructure.rest;
 
 import com.outfit7.fun7.service.RestIntegrationTest;
 import com.outfit7.fun7.service.admin.UserService;
-import com.outfit7.fun7.service.admin.api.dto.User;
-import com.outfit7.fun7.service.admin.api.dto.UserNotFoundException;
+import com.outfit7.fun7.service.user.api.dto.User;
+import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -29,8 +28,8 @@ class UserControllerIntegrationTest extends RestIntegrationTest {
   @Test
   void shouldGetUsers() {
     // given
-    User firstUser = new User("111", "Bob", "test@mail.com");
-    User secondUser = new User("222", "Sam", "test2@mail.com");
+    User firstUser = new User("111", "US", 3);
+    User secondUser = new User("222", "FR", 4);
     List<User> users = List.of(firstUser, secondUser);
     when(userService.getAllUsers()).thenReturn(users);
 
@@ -51,8 +50,8 @@ class UserControllerIntegrationTest extends RestIntegrationTest {
   void shouldGetUserById() {
     // given
     String userId = "111";
-    User givenUser = new User(userId, "Bob", "test@mail.com");
-    when(userService.getUserById(userId)).thenReturn(Optional.of(givenUser));
+    User givenUser = new User("111", "US", 3);
+    when(userService.getUserById(userId)).thenReturn(givenUser);
 
     // when
     ResponseEntity<User> response = testRestTemplate.getForEntity(USERS_URL + userId, User.class);

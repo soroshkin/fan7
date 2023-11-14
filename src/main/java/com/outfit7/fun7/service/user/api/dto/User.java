@@ -1,6 +1,6 @@
 package com.outfit7.fun7.service.user.api.dto;
 
-public class UserInfo {
+public class User {
 
   private final String userId;
 
@@ -8,7 +8,7 @@ public class UserInfo {
 
   private final int gameCount;
 
-  public UserInfo(String userId, String countryCode, int gameCount) {
+  public User(String userId, String countryCode, int gameCount) {
     this.userId = userId;
     this.countryCode = countryCode;
     this.gameCount = gameCount;

@@ -1,8 +1,8 @@
 package com.outfit7.fun7.service.user;
 
-import com.outfit7.fun7.service.user.api.UserInfoStorageOperations;
+import com.outfit7.fun7.service.user.api.UserStorageOperations;
 import com.outfit7.fun7.service.user.api.dto.FeatureState;
-import com.outfit7.fun7.service.user.api.dto.UserInfo;
+import com.outfit7.fun7.service.user.api.dto.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,15 +12,15 @@ class MultiplayerService {
 
   private static final int NUMBER_OF_GAMES_PLAYED_TO_ENABLE_MULTIPLAYER = 5;
 
-  private final UserInfoStorageOperations userInfoStorageOperations;
+  private final UserStorageOperations userStorageOperations;
 
-  MultiplayerService(UserInfoStorageOperations userInfoStorageOperations) {
-    this.userInfoStorageOperations = userInfoStorageOperations;
+  MultiplayerService(UserStorageOperations userStorageOperations) {
+    this.userStorageOperations = userStorageOperations;
   }
 
   FeatureState getMultiplayerFeatureState(String userId, String countryCode) {
-    UserInfo userInfo = userInfoStorageOperations.getUserInfo(userId);
-    if (countryCode.equals(US_COUNTRY_CODE) && userInfo.getGameCount() > NUMBER_OF_GAMES_PLAYED_TO_ENABLE_MULTIPLAYER) {
+    User user = userStorageOperations.getUser(userId);
+    if (countryCode.equals(US_COUNTRY_CODE) && user.getGameCount() > NUMBER_OF_GAMES_PLAYED_TO_ENABLE_MULTIPLAYER) {
       return FeatureState.ENABLED;
     }
     return FeatureState.DISABLED;
