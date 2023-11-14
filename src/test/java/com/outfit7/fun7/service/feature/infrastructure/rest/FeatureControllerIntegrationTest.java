@@ -19,6 +19,10 @@ import static org.mockito.Mockito.when;
 
 class FeatureControllerIntegrationTest extends RestIntegrationTest {
 
+  private static final String USERNAME = "user";
+
+  private static final String PASSWORD = "user";
+
   private static final String FEATURES_URL = "/features/state?timezone={timezone}&userId={userId}&cc={cc}";
 
   @MockBean
@@ -38,7 +42,38 @@ class FeatureControllerIntegrationTest extends RestIntegrationTest {
     when(serviceCheckOperations.getUserFeatures(anyString(), anyString(), anyString())).thenReturn(givenUserFeatures);
 
     // when
-    ResponseEntity<UserFeatures> response = testRestTemplate.getForEntity(FEATURES_URL, UserFeatures.class, timezone, userId, cc);
+    ResponseEntity<UserFeatures> response = testRestTemplate
+      .withBasicAuth(USERNAME, PASSWORD)
+      .getForEntity(FEATURES_URL, UserFeatures.class, timezone, userId, cc);
+
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull();
+    UserFeatures userFeatures = response.getBody();
+    assertThat(userFeatures).isNotNull();
+    assertThat(userFeatures.getAds()).isEqualTo(FeatureState.ENABLED);
+    assertThat(userFeatures.getUserSupport()).isEqualTo(FeatureState.ENABLED);
+    assertThat(userFeatures.getMultiplayer()).isEqualTo(FeatureState.ENABLED);
+    verify(serviceCheckOperations).getUserFeatures(timezone, userId, cc);
+  }
+
+  @Test
+  void shouldGetUserFeatureStateWithAdminCredentials() {
+    // given
+    UserFeatures givenUserFeatures = UserFeatures.builder()
+      .withMultiplayer(FeatureState.ENABLED)
+      .withUserSupport(FeatureState.ENABLED)
+      .withAds(FeatureState.ENABLED)
+      .build();
+    String timezone = "CET";
+    String cc = "US";
+    String userId = "123";
+    when(serviceCheckOperations.getUserFeatures(anyString(), anyString(), anyString())).thenReturn(givenUserFeatures);
+
+    // when
+    ResponseEntity<UserFeatures> response = testRestTemplate
+      .withBasicAuth("admin", "admin")
+      .getForEntity(FEATURES_URL, UserFeatures.class, timezone, userId, cc);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -61,7 +96,9 @@ class FeatureControllerIntegrationTest extends RestIntegrationTest {
     when(serviceCheckOperations.getUserFeatures(anyString(), anyString(), anyString())).thenThrow(new UserNotFoundException(errorMessage));
 
     // when
-    ResponseEntity<String> response = testRestTemplate.getForEntity(FEATURES_URL, String.class, timezone, userId, cc);
+    ResponseEntity<String> response = testRestTemplate
+      .withBasicAuth(USERNAME, PASSWORD)
+      .getForEntity(FEATURES_URL, String.class, timezone, userId, cc);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
@@ -78,9 +115,11 @@ class FeatureControllerIntegrationTest extends RestIntegrationTest {
   })
   void shouldReturnBadRequestWhenParametersAreAbsent(String timezone, String userId, String cc) {
     // when
-    ResponseEntity<String> response = testRestTemplate.getForEntity("/features/state?timezone={timezone}&userId={userId}&cc={cc}",
-      String.class,
-      timezone, userId, cc);
+    ResponseEntity<String> response = testRestTemplate
+      .withBasicAuth(USERNAME, PASSWORD)
+      .getForEntity("/features/state?timezone={timezone}&userId={userId}&cc={cc}",
+        String.class,
+        timezone, userId, cc);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);

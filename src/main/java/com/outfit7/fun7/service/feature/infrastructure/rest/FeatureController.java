@@ -2,6 +2,7 @@ package com.outfit7.fun7.service.feature.infrastructure.rest;
 
 import com.outfit7.fun7.service.feature.api.ServiceCheckOperations;
 import com.outfit7.fun7.service.feature.api.dto.UserFeatures;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 
 @RestController
 @Validated
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 class FeatureController {
 
   private final ServiceCheckOperations serviceCheckOperations;

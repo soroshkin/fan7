@@ -4,6 +4,7 @@ import com.outfit7.fun7.service.user.api.UserOperations;
 import com.outfit7.fun7.service.user.api.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/admin/api/users")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
   private final Logger logger = LoggerFactory.getLogger(getClass());
