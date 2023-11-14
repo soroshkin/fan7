@@ -13,6 +13,7 @@ import javax.validation.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class FeatureExceptionHandlerIntegrationTest extends RestIntegrationTest {
@@ -34,6 +35,7 @@ class FeatureExceptionHandlerIntegrationTest extends RestIntegrationTest {
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     assertThat(response.getBody()).isEqualTo("User not found");
+    verify(serviceCheckOperations).getUserFeatures(any(), any(), any());
   }
 
   @Test
@@ -48,6 +50,7 @@ class FeatureExceptionHandlerIntegrationTest extends RestIntegrationTest {
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     assertThat(response.getBody()).isEqualTo("Validation failed");
+    verify(serviceCheckOperations).getUserFeatures(any(), any(), any());
   }
 
   @Test
@@ -62,5 +65,6 @@ class FeatureExceptionHandlerIntegrationTest extends RestIntegrationTest {
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.GATEWAY_TIMEOUT);
     assertThat(response.getBody()).isEqualTo("Ads feature not retrieved");
+    verify(serviceCheckOperations).getUserFeatures(any(), any(), any());
   }
 }

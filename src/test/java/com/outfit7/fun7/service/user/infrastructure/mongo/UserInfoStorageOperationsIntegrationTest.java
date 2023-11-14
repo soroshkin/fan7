@@ -35,7 +35,7 @@ class UserInfoStorageOperationsIntegrationTest extends NeedsTestsDataIntegration
   }
 
   @Test
-  void shouldGetUserInfoWhenUserNotFound() {
+  void shouldNotGetUserInfoWhenUserNotFound() {
     // given
     String userId = "456";
 

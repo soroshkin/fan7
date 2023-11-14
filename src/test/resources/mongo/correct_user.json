@@ -1,0 +1,8 @@
+[
+  {
+    "id": "123",
+    "username": "Bob",
+    "email": "test@mail.com",
+    "_class": "com.outfit7.fun7.service.admin.infrastructure.mongo.UserEntity"
+  }
+]
