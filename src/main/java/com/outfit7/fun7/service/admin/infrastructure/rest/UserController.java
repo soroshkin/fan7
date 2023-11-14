@@ -2,6 +2,8 @@ package com.outfit7.fun7.service.admin.infrastructure.rest;
 
 import com.outfit7.fun7.service.admin.api.UserOperations;
 import com.outfit7.fun7.service.user.api.dto.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,8 @@ import java.util.List;
 @RequestMapping("/admin/api/users")
 public class UserController {
 
+  private final Logger logger = LoggerFactory.getLogger(getClass());
+
   private final UserOperations userOperations;
 
   public UserController(UserOperations userOperations) {
@@ -25,16 +29,21 @@ public class UserController {
 
   @GetMapping
   public List<User> getAllUsers() {
+    logger.info("Returning all users");
     return userOperations.getAllUsers();
   }
 
   @GetMapping("/{userId}")
   public User getUserDetails(@PathVariable @NotBlank String userId) {
+    logger.info("Returning user with id {}", userId);
     return userOperations.getUserById(userId);
   }
 
   @DeleteMapping("/{userId}")
   public String deleteUser(@PathVariable @NotBlank String userId) {
-    return userOperations.deleteUser(userId);
+    logger.info("About to delete user with id {}", userId);
+    String user = userOperations.deleteUser(userId);
+    logger.info("User with id {} has been deleted", userId);
+    return user;
   }
 }
