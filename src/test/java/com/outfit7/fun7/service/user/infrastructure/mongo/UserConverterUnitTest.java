@@ -2,6 +2,8 @@ package com.outfit7.fun7.service.user.infrastructure.mongo;
 
 import com.outfit7.fun7.service.UnitTest;
 import com.outfit7.fun7.service.user.api.dto.User;
+import com.outfit7.fun7.service.user.infrastructure.mongo.UserConverter;
+import com.outfit7.fun7.service.user.infrastructure.mongo.UserEntity;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

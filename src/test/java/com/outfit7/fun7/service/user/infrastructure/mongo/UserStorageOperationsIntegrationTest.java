@@ -3,6 +3,9 @@ package com.outfit7.fun7.service.user.infrastructure.mongo;
 import com.outfit7.fun7.service.NeedsTestsDataIntegrationTest;
 import com.outfit7.fun7.service.user.api.dto.User;
 import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
+import com.outfit7.fun7.service.user.infrastructure.mongo.UserConverter;
+import com.outfit7.fun7.service.user.infrastructure.mongo.UserDatabaseService;
+import com.outfit7.fun7.service.user.infrastructure.mongo.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
