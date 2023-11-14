@@ -3,10 +3,15 @@ package com.outfit7.fun7.service.user.infrastructure.ads;
 import com.outfit7.fun7.service.IntegrationTest;
 import com.outfit7.fun7.service.user.api.dto.AdsFeatureStateResponse;
 import com.outfit7.fun7.service.user.api.dto.FeignClientException;
+import com.xebialabs.restito.server.StubServer;
+import jakarta.annotation.PostConstruct;
 import org.glassfish.grizzly.http.Method;
 import org.glassfish.grizzly.http.util.HttpStatus;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import static com.xebialabs.restito.builder.stub.StubHttp.whenHttp;
 import static com.xebialabs.restito.builder.verify.VerifyHttp.verifyHttp;
@@ -24,8 +29,28 @@ class AdsFeatureStateFeignClientIntegrationTest extends IntegrationTest {
 
   private static final String FUN_7_AD_PARTNER_URI = "/fun7-ad-partner";
 
+  private StubServer stubServer;
+
   @Autowired
   private AdsFeatureStateFeignClient adsFeatureStateFeignClient;
+
+  @Value("${stub.server.port}")
+  private Integer serverPort;
+
+  @PostConstruct
+  void init() {
+    this.stubServer = new StubServer(serverPort);
+  }
+
+  @BeforeEach
+  void setUp() {
+    stubServer.run();
+  }
+
+  @AfterEach
+  void tearDown() {
+    stubServer.stop();
+  }
 
   @Test
   void shouldGetAdsFeatureState() {
