@@ -56,6 +56,21 @@ class UserControllerIntegrationTest extends RestIntegrationTest {
   void shouldNotGetUsersWhenInvalidCredentialsAreProvided() {
     // when
     ResponseEntity<String> response = testRestTemplate
+      .withBasicAuth(ADMIN_USERNAME, "wrong_password")
+      .exchange(USERS_URL,
+        HttpMethod.GET,
+        null,
+        String.class);
+
+    // then
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    verifyNoInteractions(userService);
+  }
+
+  @Test
+  void shouldNotGetUsersWhenUserDoesNotHaveRequiredRole() {
+    // when
+    ResponseEntity<String> response = testRestTemplate
       .withBasicAuth("user", "user")
       .exchange(USERS_URL,
         HttpMethod.GET,
