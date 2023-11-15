@@ -33,17 +33,14 @@ class SupportFeatureService {
     DayOfWeek currentDayOfWeek = currentDateTime.getDayOfWeek();
     LocalTime currentTime = currentDateTime.toLocalTime();
 
-    boolean isWorkday = isWorkday(currentDayOfWeek);
-    boolean isWithinSupportHours = isWithinSupportHours(currentTime);
-
-    return isWorkday && isWithinSupportHours;
+    return isWorkday(currentDayOfWeek) && isWithinSupportHours(currentTime);
   }
 
   private boolean isWorkday(DayOfWeek dayOfWeek) {
     return WORKDAYS.contains(dayOfWeek);
   }
 
-  private static boolean isWithinSupportHours(LocalTime currentTime) {
+  private boolean isWithinSupportHours(LocalTime currentTime) {
     return !currentTime.isBefore(SUPPORT_START_TIME) && !currentTime.isAfter(SUPPORT_END_TIME);
   }
 }

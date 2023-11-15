@@ -3,6 +3,8 @@ package com.outfit7.fun7.service.user.infrastructure.mongo;
 import com.outfit7.fun7.service.user.api.UserStorageOperations;
 import com.outfit7.fun7.service.user.api.dto.User;
 import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +13,9 @@ import java.util.Optional;
 @Service
 class UserDatabaseService implements UserStorageOperations {
 
-  private static final String USER_INFO_NOT_FOUND_ERROR_MESSAGE = "user is not found for userId %s";
+  private final Logger logger = LoggerFactory.getLogger(getClass());
+
+  private static final String USER_INFO_NOT_FOUND_ERROR_MESSAGE = "user is not found with userId %s";
 
   private final UserRepository userRepository;
 
@@ -50,6 +54,7 @@ class UserDatabaseService implements UserStorageOperations {
     Optional<UserEntity> userEntityToDelete = userRepository.findByUserId(userId);
 
     if (userEntityToDelete.isEmpty()) {
+      logger.warn("User with userId {} is not found", userId);
       throw new UserNotFoundException(String.format(USER_INFO_NOT_FOUND_ERROR_MESSAGE, userId));
     }
     userRepository.delete(userEntityToDelete.get());

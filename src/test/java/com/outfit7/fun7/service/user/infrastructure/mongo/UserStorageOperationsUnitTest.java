@@ -56,7 +56,7 @@ class UserStorageOperationsUnitTest extends UnitTest {
     // when - then
     assertThatThrownBy(() -> userDatabaseService.getUser(userId))
       .isExactlyInstanceOf(UserNotFoundException.class)
-      .hasMessageContaining("user is not found for userId " + userId);
+      .hasMessageContaining("user is not found with userId " + userId);
 
     verify(userRepository).findByUserId(userId);
     verifyNoInteractions(userConverter);
