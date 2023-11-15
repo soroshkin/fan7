@@ -1,8 +1,8 @@
 [
   {
-    "id": "123",
-    "username": "Bob",
-    "email": "test@mail.com",
-    "_class": "com.outfit7.fun7.service.admin.infrastructure.mongo.UserEntity"
+    "_id": "655497c660897c5a1b622182",
+    "userId": "123",
+    "gameCount": 3,
+    "_class": "com.outfit7.fun7.service.user.infrastructure.mongo.UserEntity"
   }
 ]

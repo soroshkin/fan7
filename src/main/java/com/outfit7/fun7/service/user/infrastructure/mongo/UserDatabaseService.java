@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 class UserDatabaseService implements UserStorageOperations {
 
-  private static final String USER_INFO_NOT_FOUND_ERROR_MESSAGE = "user info is not found for userId %s";
+  private static final String USER_INFO_NOT_FOUND_ERROR_MESSAGE = "user is not found for userId %s";
 
   private final UserRepository userRepository;
 
@@ -24,14 +24,16 @@ class UserDatabaseService implements UserStorageOperations {
 
   @Override
   public List<User> getAllUsers() {
-    return userRepository.findAll().stream()
-      .map(userEntity -> new User(userEntity.getUserId(), userEntity.getGameCount()))
+    return userRepository.findAll()
+      .stream()
+      .map(userEntity -> new User(userEntity.getId(), userEntity.getUserId(), userEntity.getGameCount()))
       .toList();
   }
 
   @Override
   public User getUser(String userId) {
-    return userRepository.findById(userId)
+    return userRepository
+      .findByUserId(userId)
       .map(userConverter::toUser)
       .orElseThrow(() -> new UserNotFoundException(String.format(USER_INFO_NOT_FOUND_ERROR_MESSAGE, userId)));
   }
@@ -45,7 +47,7 @@ class UserDatabaseService implements UserStorageOperations {
 
   @Override
   public String deleteUserById(String userId) {
-    Optional<UserEntity> userEntityToDelete = userRepository.findById(userId);
+    Optional<UserEntity> userEntityToDelete = userRepository.findByUserId(userId);
 
     if (userEntityToDelete.isEmpty()) {
       throw new UserNotFoundException(String.format(USER_INFO_NOT_FOUND_ERROR_MESSAGE, userId));

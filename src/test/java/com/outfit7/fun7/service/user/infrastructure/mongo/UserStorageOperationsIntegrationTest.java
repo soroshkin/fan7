@@ -24,7 +24,7 @@ class UserStorageOperationsIntegrationTest extends NeedsTestsDataIntegrationTest
   void shouldGetUserInfo() {
     // given
     String userId = "123";
-    populateDatabase("/mongo/correct_user_info.json");
+    populateDatabase("/mongo/correct_user.json");
 
     // when
     User actualUser = userDatabaseService.getUser(userId);
@@ -42,7 +42,7 @@ class UserStorageOperationsIntegrationTest extends NeedsTestsDataIntegrationTest
     // when - then
     assertThatThrownBy(() -> userDatabaseService.getUser(userId))
       .isExactlyInstanceOf(UserNotFoundException.class)
-      .hasMessageContaining("user info is not found for userId " + userId);
+      .hasMessageContaining("user is not found for userId " + userId);
   }
 
   @Test
@@ -63,7 +63,7 @@ class UserStorageOperationsIntegrationTest extends NeedsTestsDataIntegrationTest
   void shouldDeleteUserInfo() {
     // given
     String userId = "123";
-    populateDatabase("/mongo/correct_user_info.json");
+    populateDatabase("/mongo/correct_user.json");
 
     // when
     String deletedUserId = userDatabaseService.deleteUserById(userId);
@@ -81,6 +81,6 @@ class UserStorageOperationsIntegrationTest extends NeedsTestsDataIntegrationTest
     // when - then
     assertThatThrownBy(() -> userDatabaseService.deleteUserById(userId))
       .isExactlyInstanceOf(UserNotFoundException.class)
-      .hasMessageContaining("user info is not found for userId " + userId);
+      .hasMessageContaining("user is not found for userId " + userId);
   }
 }

@@ -27,13 +27,14 @@ class UserConverterUnitTest extends UnitTest {
   @Test
   void ShouldConvertToUserInfo() {
     // given
-    UserEntity userEntity = new UserEntity("123", 3);
+    UserEntity userEntity = new UserEntity("655497c660897c5a1b622182", "123", 3);
 
     // when
     User user = userConverter.toUser(userEntity);
 
     // then
     assertThat(user).isNotNull();
+    assertThat(user.getId()).isEqualTo(userEntity.getId());
     assertThat(user.getUserId()).isEqualTo(userEntity.getUserId());
     assertThat(user.getGameCount()).isEqualTo(userEntity.getGameCount());
   }

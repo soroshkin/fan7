@@ -31,10 +31,10 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldGetUser() {
     // given
     String userId = "123";
-    UserEntity userEntity = new UserEntity(userId, 3);
+    UserEntity userEntity = givenUserEntity(userId);
     User expectedUser = new User(userId, 3);
 
-    when(userRepository.findById(userId)).thenReturn(Optional.of(userEntity));
+    when(userRepository.findByUserId(userId)).thenReturn(Optional.of(userEntity));
     when(userConverter.toUser(userEntity)).thenReturn(expectedUser);
 
     // when
@@ -42,7 +42,7 @@ class UserStorageOperationsUnitTest extends UnitTest {
 
     // then
     assertThat(actualUser).isEqualTo(expectedUser);
-    verify(userRepository).findById(userId);
+    verify(userRepository).findByUserId(userId);
     verify(userConverter).toUser(userEntity);
   }
 
@@ -50,14 +50,14 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldGetUserWhenUserNotFound() {
     // given
     String userId = "456";
-    when(userRepository.findById(userId)).thenReturn(Optional.empty());
+    when(userRepository.findByUserId(userId)).thenReturn(Optional.empty());
 
     // when - then
     assertThatThrownBy(() -> userDatabaseService.getUser(userId))
       .isExactlyInstanceOf(UserNotFoundException.class)
-      .hasMessageContaining("user info is not found for userId " + userId);
+      .hasMessageContaining("user is not found for userId " + userId);
 
-    verify(userRepository).findById(userId);
+    verify(userRepository).findByUserId(userId);
     verifyNoInteractions(userConverter);
   }
 
@@ -65,7 +65,7 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldSaveUser() {
     // given
     User user = new User("123", 3);
-    UserEntity userEntity = new UserEntity("123", 3);
+    UserEntity userEntity = givenUserEntity(user.getUserId());
 
     when(userConverter.toEntity(user)).thenReturn(userEntity);
     when(userRepository.save(userEntity)).thenReturn(userEntity);
@@ -85,16 +85,16 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldDeleteUser() {
     // given
     String userId = "123";
-    UserEntity userEntityToDelete = new UserEntity(userId, 3);
+    UserEntity userEntityToDelete = givenUserEntity(userId);
 
-    when(userRepository.findById(userId)).thenReturn(Optional.of(userEntityToDelete));
+    when(userRepository.findByUserId(userId)).thenReturn(Optional.of(userEntityToDelete));
 
     // when
     String deletedUserId = userDatabaseService.deleteUserById(userId);
 
     // then
     assertThat(deletedUserId).isEqualTo(userId);
-    verify(userRepository).findById(userId);
+    verify(userRepository).findByUserId(userId);
     verifyNoInteractions(userConverter);
     verify(userRepository).delete(userEntityToDelete);
   }
@@ -103,14 +103,18 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldNotDeleteUserWhenUserNotFound() {
     // given
     String userId = "456";
-    when(userRepository.findById(userId)).thenReturn(Optional.empty());
+    when(userRepository.findByUserId(userId)).thenReturn(Optional.empty());
 
     // when - then
     assertThatThrownBy(() -> userDatabaseService.deleteUserById(userId))
       .isExactlyInstanceOf(UserNotFoundException.class);
 
-    verify(userRepository).findById(userId);
+    verify(userRepository).findByUserId(userId);
     verifyNoInteractions(userConverter);
     verifyNoMoreInteractions(userConverter, userRepository);
+  }
+
+  private UserEntity givenUserEntity(String userId) {
+    return new UserEntity("655497c660897c5a1b622182", userId, 3);
   }
 }
