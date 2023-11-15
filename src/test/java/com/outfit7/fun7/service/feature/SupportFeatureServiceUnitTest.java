@@ -16,6 +16,20 @@ class SupportFeatureServiceUnitTest {
 
   private static final ZoneId CET_ZONE_ID = ZoneId.of("Europe/Ljubljana");
 
+  @ParameterizedTest
+  @MethodSource("provideTestData")
+  void shouldReturnCorrectSupportFeatureState(String clockTime, FeatureState expectedState) {
+    // given
+    Clock fixedClock = Clock.fixed(Instant.parse(clockTime), CET_ZONE_ID);
+    SupportFeatureService supportFeatureService = new SupportFeatureService(fixedClock);
+
+    // when
+    FeatureState result = supportFeatureService.getSupportFeatureState();
+
+    // then
+    assertThat(result).isEqualTo(expectedState);
+  }
+
   private static Stream<Arguments> provideTestData() {
     return Stream.of(
       Arguments.of("2023-11-01T18:00:00Z", FeatureState.DISABLED),
@@ -38,19 +52,6 @@ class SupportFeatureServiceUnitTest {
       Arguments.of("2023-06-03T10:00:01Z", FeatureState.DISABLED),
       Arguments.of("2023-06-02T14:00:00Z", FeatureState.DISABLED)
     );
-  }
-
-  @ParameterizedTest
-  @MethodSource("provideTestData")
-  void shouldReturnCorrectSupportFeatureState(String clockTime, FeatureState expectedState) {
-    Clock fixedClock = Clock.fixed(Instant.parse(clockTime), CET_ZONE_ID);
-    SupportFeatureService supportFeatureService = new SupportFeatureService(fixedClock);
-
-    // When
-    FeatureState result = supportFeatureService.getSupportFeatureState();
-
-    // Then
-    assertThat(result).isEqualTo(expectedState);
   }
 }
 
