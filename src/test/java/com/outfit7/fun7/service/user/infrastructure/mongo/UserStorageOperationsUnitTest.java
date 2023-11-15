@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -112,6 +113,23 @@ class UserStorageOperationsUnitTest extends UnitTest {
     verify(userRepository).findByUserId(userId);
     verifyNoInteractions(userConverter);
     verifyNoMoreInteractions(userConverter, userRepository);
+  }
+
+  @Test
+  void shouldReturnAllUsers() {
+    // given
+    List<UserEntity> userEntities = List.of(new UserEntity("1", "john123", 5),
+      new UserEntity("2", "alice456", 8));
+    when(userRepository.findAll()).thenReturn(userEntities);
+
+    // when
+    List<User> actualUsers = userDatabaseService.getAllUsers();
+
+    // then
+    assertThat(actualUsers).hasSize(userEntities.size())
+      .usingRecursiveComparison()
+      .isEqualTo(userEntities);
+    verify(userRepository).findAll();
   }
 
   private UserEntity givenUserEntity(String userId) {

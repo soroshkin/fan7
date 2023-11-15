@@ -10,7 +10,7 @@ public class AdsFeatureStateResponse {
   private final boolean adsEnabled;
 
   @JsonCreator
-  AdsFeatureStateResponse(@JsonProperty("ads") boolean adsEnabled) {
+  public AdsFeatureStateResponse(@JsonProperty("ads") boolean adsEnabled) {
     this.adsEnabled = adsEnabled;
   }
 

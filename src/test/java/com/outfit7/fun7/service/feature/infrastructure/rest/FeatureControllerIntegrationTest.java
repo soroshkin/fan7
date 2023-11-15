@@ -106,8 +106,7 @@ class FeatureControllerIntegrationTest extends RestIntegrationTest {
   @CsvSource({
     ",,,",
     "CET,,123",
-    "CET,123,",
-    ",123,US",
+    "CET,123,"
   })
   void shouldReturnBadRequestWhenParametersAreAbsent(String timezone, String userId, String cc) {
     // when
@@ -121,4 +120,3 @@ class FeatureControllerIntegrationTest extends RestIntegrationTest {
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }
-

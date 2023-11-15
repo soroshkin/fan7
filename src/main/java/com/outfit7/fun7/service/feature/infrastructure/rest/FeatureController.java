@@ -22,7 +22,7 @@ class FeatureController {
   }
 
   @GetMapping(path = "/features/state")
-  UserFeatures getUserFeatureState(@RequestParam @NotBlank String timezone,
+  UserFeatures getUserFeatureState(@RequestParam(required = false) String timezone,
                                    @RequestParam @NotBlank String userId,
                                    @RequestParam(name = "cc") @NotBlank String countryCode) {
     return serviceCheckOperations.getUserFeatures(timezone, userId, countryCode);
