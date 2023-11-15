@@ -1,8 +1,8 @@
 package com.outfit7.fun7.service.feature;
 
 import com.outfit7.fun7.service.UnitTest;
-import com.outfit7.fun7.service.user.api.UserStorageOperations;
 import com.outfit7.fun7.service.feature.api.dto.FeatureState;
+import com.outfit7.fun7.service.user.api.UserStorageOperations;
 import com.outfit7.fun7.service.user.api.dto.User;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,7 +25,7 @@ class MultiplayerServiceUnitTest extends UnitTest {
     // given
     String userId = "123";
     String countryCode = "US";
-    User user = new User(userId, countryCode, 6);
+    User user = new User(userId, 6);
 
     when(userStorageOperations.getUser(userId)).thenReturn(user);
 
@@ -42,7 +42,7 @@ class MultiplayerServiceUnitTest extends UnitTest {
     // given
     String userId = "456";
     String countryCode = "US";
-    User user = new User(userId, countryCode, 3);
+    User user = new User(userId, 3);
 
     when(userStorageOperations.getUser(userId)).thenReturn(user);
 
@@ -59,7 +59,7 @@ class MultiplayerServiceUnitTest extends UnitTest {
     // given
     String userId = "789";
     String countryCode = "CA";
-    User user = new User(userId, countryCode, 6);
+    User user = new User(userId, 6);
 
     when(userStorageOperations.getUser(userId)).thenReturn(user);
 

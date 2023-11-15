@@ -3,9 +3,6 @@ package com.outfit7.fun7.service.user.infrastructure.mongo;
 import com.outfit7.fun7.service.NeedsTestsDataIntegrationTest;
 import com.outfit7.fun7.service.user.api.dto.User;
 import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserConverter;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserDatabaseService;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -51,7 +48,7 @@ class UserStorageOperationsIntegrationTest extends NeedsTestsDataIntegrationTest
   @Test
   void shouldSaveUserInfo() {
     // given
-    User user = new User("123", "US", 3);
+    User user = new User("123", 3);
 
     // when
     User savedUser = userDatabaseService.saveUser(user);
@@ -59,7 +56,6 @@ class UserStorageOperationsIntegrationTest extends NeedsTestsDataIntegrationTest
     // then
     assertThat(savedUser).isNotNull();
     assertThat(savedUser.getUserId()).isEqualTo(user.getUserId());
-    assertThat(savedUser.getCountryCode()).isEqualTo(user.getCountryCode());
     assertThat(savedUser.getGameCount()).isEqualTo(user.getGameCount());
   }
 

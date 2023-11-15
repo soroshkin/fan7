@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 public class UserConverter {
 
   UserEntity toEntity(User user) {
-    return new UserEntity(user.getUserId(), user.getCountryCode(), user.getGameCount());
+    return new UserEntity(user.getUserId(), user.getGameCount());
   }
 
   User toUser(UserEntity userEntity) {
-    return new User(userEntity.getUserId(), userEntity.getCountryCode(), userEntity.getGameCount());
+    return new User(userEntity.getUserId(), userEntity.getGameCount());
   }
 }

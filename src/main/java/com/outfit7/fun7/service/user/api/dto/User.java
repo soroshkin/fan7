@@ -4,22 +4,15 @@ public class User {
 
   private final String userId;
 
-  private final String countryCode;
-
   private final int gameCount;
 
-  public User(String userId, String countryCode, int gameCount) {
+  public User(String userId, int gameCount) {
     this.userId = userId;
-    this.countryCode = countryCode;
     this.gameCount = gameCount;
   }
 
   public String getUserId() {
     return userId;
-  }
-
-  public String getCountryCode() {
-    return countryCode;
   }
 
   public int getGameCount() {
@@ -30,7 +23,6 @@ public class User {
   public String toString() {
     return "UserInfo{" +
       "userId='" + userId + '\'' +
-      ", countryCode='" + countryCode + '\'' +
       ", gameCount=" + gameCount +
       '}';
   }

@@ -25,7 +25,7 @@ public class UserDatabaseService implements UserStorageOperations {
   @Override
   public List<User> getAllUsers() {
     return userRepository.findAll().stream()
-      .map(userEntity -> new User(userEntity.getUserId(), userEntity.getCountryCode(), userEntity.getGameCount()))
+      .map(userEntity -> new User(userEntity.getUserId(), userEntity.getGameCount()))
       .toList();
   }
 

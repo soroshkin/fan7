@@ -9,22 +9,15 @@ public class UserEntity {
   @Id
   private final String userId;
 
-  private final String countryCode;
-
   private final int gameCount;
 
-  public UserEntity(String userId, String countryCode, int gameCount) {
+  public UserEntity(String userId, int gameCount) {
     this.userId = userId;
-    this.countryCode = countryCode;
     this.gameCount = gameCount;
   }
 
   public String getUserId() {
     return userId;
-  }
-
-  public String getCountryCode() {
-    return countryCode;
   }
 
   public int getGameCount() {
@@ -35,7 +28,6 @@ public class UserEntity {
   public String toString() {
     return "UserInfoEntity{" +
       "userId='" + userId + '\'' +
-      ", countryCode='" + countryCode + '\'' +
       ", gameCount=" + gameCount +
       '}';
   }

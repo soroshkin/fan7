@@ -33,8 +33,8 @@ class UserControllerIntegrationTest extends RestIntegrationTest {
   @Test
   void shouldGetUsers() {
     // given
-    User firstUser = new User("111", "US", 3);
-    User secondUser = new User("222", "FR", 4);
+    User firstUser = new User("111", 3);
+    User secondUser = new User("222", 4);
     List<User> users = List.of(firstUser, secondUser);
     when(userService.getAllUsers()).thenReturn(users);
 
@@ -100,7 +100,7 @@ class UserControllerIntegrationTest extends RestIntegrationTest {
   void shouldGetUserById() {
     // given
     String userId = "111";
-    User givenUser = new User("111", "US", 3);
+    User givenUser = new User("111", 3);
     when(userService.getUserById(userId)).thenReturn(givenUser);
 
     // when

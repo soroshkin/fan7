@@ -3,10 +3,6 @@ package com.outfit7.fun7.service.user.infrastructure.mongo;
 import com.outfit7.fun7.service.UnitTest;
 import com.outfit7.fun7.service.user.api.dto.User;
 import com.outfit7.fun7.service.user.api.dto.UserNotFoundException;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserConverter;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserDatabaseService;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserEntity;
-import com.outfit7.fun7.service.user.infrastructure.mongo.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,8 +31,8 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldGetUser() {
     // given
     String userId = "123";
-    UserEntity userEntity = new UserEntity(userId, "US", 3);
-    User expectedUser = new User(userId, "US", 3);
+    UserEntity userEntity = new UserEntity(userId, 3);
+    User expectedUser = new User(userId, 3);
 
     when(userRepository.findById(userId)).thenReturn(Optional.of(userEntity));
     when(userConverter.toUser(userEntity)).thenReturn(expectedUser);
@@ -68,8 +64,8 @@ class UserStorageOperationsUnitTest extends UnitTest {
   @Test
   void shouldSaveUser() {
     // given
-    User user = new User("123", "US", 3);
-    UserEntity userEntity = new UserEntity("123", "US", 3);
+    User user = new User("123", 3);
+    UserEntity userEntity = new UserEntity("123", 3);
 
     when(userConverter.toEntity(user)).thenReturn(userEntity);
     when(userRepository.save(userEntity)).thenReturn(userEntity);
@@ -89,8 +85,7 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldDeleteUser() {
     // given
     String userId = "123";
-    User user = new User(userId, "US", 3);
-    UserEntity userEntityToDelete = new UserEntity(userId, "US", 3);
+    UserEntity userEntityToDelete = new UserEntity(userId, 3);
 
     when(userRepository.findById(userId)).thenReturn(Optional.of(userEntityToDelete));
 
@@ -108,7 +103,6 @@ class UserStorageOperationsUnitTest extends UnitTest {
   void shouldNotDeleteUserWhenUserNotFound() {
     // given
     String userId = "456";
-    UserEntity userEntity = new UserEntity(userId, "US", 3);
     when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
     // when - then
