@@ -4,14 +4,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("users")
-public class UserEntity {
+class UserEntity {
 
   @Id
   private final String userId;
 
   private final int gameCount;
 
-  public UserEntity(String userId, int gameCount) {
+  UserEntity(String userId, int gameCount) {
     this.userId = userId;
     this.gameCount = gameCount;
   }

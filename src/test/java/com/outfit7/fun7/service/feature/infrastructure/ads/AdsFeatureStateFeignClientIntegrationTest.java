@@ -1,7 +1,6 @@
 package com.outfit7.fun7.service.feature.infrastructure.ads;
 
 import com.outfit7.fun7.service.IntegrationTest;
-import com.outfit7.fun7.service.feature.api.dto.AdsFeatureStateResponse;
 import com.outfit7.fun7.service.feature.api.dto.FeignClientException;
 import com.xebialabs.restito.server.StubServer;
 import org.glassfish.grizzly.http.Method;

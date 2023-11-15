@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
 
-public class JsonAdsFeatureStateDeserializer extends JsonDeserializer<Boolean> {
+class JsonAdsFeatureStateDeserializer extends JsonDeserializer<Boolean> {
 
   private static final String FEATURE_ENABLED = "sure, why not!";
 

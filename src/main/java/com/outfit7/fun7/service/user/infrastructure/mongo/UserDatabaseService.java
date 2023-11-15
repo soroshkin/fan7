@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserDatabaseService implements UserStorageOperations {
+class UserDatabaseService implements UserStorageOperations {
 
   private static final String USER_INFO_NOT_FOUND_ERROR_MESSAGE = "user info is not found for userId %s";
 
@@ -17,7 +17,7 @@ public class UserDatabaseService implements UserStorageOperations {
 
   private final UserConverter userConverter;
 
-  public UserDatabaseService(UserRepository userRepository, UserConverter userConverter) {
+  UserDatabaseService(UserRepository userRepository, UserConverter userConverter) {
     this.userRepository = userRepository;
     this.userConverter = userConverter;
   }

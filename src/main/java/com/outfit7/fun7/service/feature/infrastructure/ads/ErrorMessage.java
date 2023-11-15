@@ -3,7 +3,7 @@ package com.outfit7.fun7.service.feature.infrastructure.ads;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ErrorMessage {
+class ErrorMessage {
 
   private final String message;
 

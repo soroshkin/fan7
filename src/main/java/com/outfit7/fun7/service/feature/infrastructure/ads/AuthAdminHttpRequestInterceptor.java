@@ -7,13 +7,13 @@ import org.springframework.http.HttpHeaders;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-public class AuthAdminHttpRequestInterceptor implements RequestInterceptor {
+class AuthAdminHttpRequestInterceptor implements RequestInterceptor {
 
   private final String username;
 
   private final String password;
 
-  public AuthAdminHttpRequestInterceptor(String username, String password) {
+  AuthAdminHttpRequestInterceptor(String username, String password) {
     this.username = username;
     this.password = password;
   }

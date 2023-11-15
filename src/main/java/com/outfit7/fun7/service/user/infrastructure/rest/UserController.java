@@ -19,13 +19,13 @@ import java.util.List;
 @Validated
 @RequestMapping("/admin/api/users")
 @PreAuthorize("hasRole('ADMIN')")
-public class UserController {
+class UserController {
 
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   private final UserOperations userOperations;
 
-  public UserController(UserOperations userOperations) {
+  UserController(UserOperations userOperations) {
     this.userOperations = userOperations;
   }
 

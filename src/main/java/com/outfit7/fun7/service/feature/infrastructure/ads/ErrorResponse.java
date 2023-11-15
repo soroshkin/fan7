@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ErrorResponse {
+class ErrorResponse {
 
   private final Long timestamp;
 
   private final List<ErrorMessage> errorMessages;
 
   @JsonCreator
-  public ErrorResponse(@JsonProperty("timestamp") Long timestamp,
+  ErrorResponse(@JsonProperty("timestamp") Long timestamp,
                        @JsonProperty("errorMessages") List<ErrorMessage> errorMessages) {
     this.timestamp = timestamp;
     this.errorMessages = errorMessages;

@@ -11,20 +11,20 @@ import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 @RestControllerAdvice
-public class RestExceptionHandler {
+class RestExceptionHandler {
 
   @ExceptionHandler(UserNotFoundException.class)
-  public ResponseEntity<String> handleUserInfoNotFoundException(UserNotFoundException ex) {
+  ResponseEntity<String> handleUserInfoNotFoundException(UserNotFoundException ex) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
-  public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException ex) {
+  ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException ex) {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
   }
 
   @ExceptionHandler(AdsFeatureNotRetrievedException.class)
-  public ResponseEntity<String> handleAdsFeatureNotRetrievedException(AdsFeatureNotRetrievedException ex) {
+  ResponseEntity<String> handleAdsFeatureNotRetrievedException(AdsFeatureNotRetrievedException ex) {
     return ResponseEntity.status(Optional.ofNullable(HttpStatus.resolve(ex.getStatusCode()))
         .orElse(HttpStatus.BAD_GATEWAY))
       .body(ex.getMessage());
