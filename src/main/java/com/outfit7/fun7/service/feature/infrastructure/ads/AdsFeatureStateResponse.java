@@ -17,4 +17,11 @@ public class AdsFeatureStateResponse {
   public boolean areAdsEnabled() {
     return adsEnabled;
   }
+
+  @Override
+  public String toString() {
+    return "AdsFeatureStateResponse{" +
+      "adsEnabled=" + adsEnabled +
+      '}';
+  }
 }
