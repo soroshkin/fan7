@@ -24,24 +24,20 @@ class FeignClientErrorDecoder implements ErrorDecoder {
 
   @Override
   public Exception decode(String methodKey, Response response) {
-    Optional<ErrorMessage> errorMessage = getErrorMessage(response);
-    return new FeignClientException(response.status(),
-      errorMessage.map(ErrorMessage::getErrorCode).orElse(""),
-      errorMessage.map(ErrorMessage::getMessage).orElse(""));
+    Optional<String> errorMessage = getErrorMessage(response);
+    return new FeignClientException(response.status(), errorMessage.orElse(""));
   }
 
-  private Optional<ErrorMessage> getErrorMessage(@Nullable Response response) {
+  private Optional<String> getErrorMessage(@Nullable Response response) {
     return Optional.ofNullable(response)
       .map(r -> {
-        ErrorResponse errorResponse = null;
+        String errorResponse = null;
         try {
-          errorResponse = (ErrorResponse) responseEntityDecoder.decode(r, ErrorResponse.class);
+          errorResponse = (String) responseEntityDecoder.decode(r, String.class);
         } catch (IOException | FeignException e) {
           logger.warn("Failed to decode error response: {}", e.getMessage());
         }
         return errorResponse;
-      })
-      .flatMap(errorResponse -> Optional.ofNullable(errorResponse.getErrorMessages())
-        .flatMap(errorMessages -> errorMessages.stream().findAny()));
+      });
   }
 }

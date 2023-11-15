@@ -26,6 +26,12 @@ class RestExceptionHandler {
   @ExceptionHandler(AdsFeatureNotRetrievedException.class)
   ResponseEntity<String> handleAdsFeatureNotRetrievedException(AdsFeatureNotRetrievedException ex) {
     return ResponseEntity.status(Optional.ofNullable(HttpStatus.resolve(ex.getStatusCode()))
+        .map(status -> {
+          if (status == HttpStatus.INTERNAL_SERVER_ERROR) {
+            return HttpStatus.BAD_GATEWAY;
+          }
+          return status;
+        })
         .orElse(HttpStatus.BAD_GATEWAY))
       .body(ex.getMessage());
   }

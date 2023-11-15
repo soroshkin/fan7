@@ -4,13 +4,10 @@ public class FeignClientException extends RuntimeException {
 
   private final Integer statusCode;
 
-  private final String errorCode;
-
   private final String errorMessage;
 
-  public FeignClientException(Integer statusCode, String errorCode, String errorMessage) {
+  public FeignClientException(Integer statusCode, String errorMessage) {
     this.statusCode = statusCode;
-    this.errorCode = errorCode;
     this.errorMessage = errorMessage;
   }
 
@@ -18,11 +15,8 @@ public class FeignClientException extends RuntimeException {
     return statusCode;
   }
 
-  public String getErrorCode() {
-    return errorCode;
-  }
-
-  public String getErrorMessage() {
+  @Override
+  public String getMessage() {
     return errorMessage;
   }
 
@@ -30,7 +24,6 @@ public class FeignClientException extends RuntimeException {
   public String toString() {
     return "FeignClientException{" +
       "statusCode=" + statusCode +
-      ", errorCode='" + errorCode + '\'' +
       ", errorMessage='" + errorMessage + '\'' +
       '}';
   }

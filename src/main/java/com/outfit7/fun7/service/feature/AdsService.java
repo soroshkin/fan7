@@ -25,8 +25,8 @@ class AdsService implements AdsFeatureStateOperations {
     try {
       return adsFeatureStateFeignClient.getAdsFeatureState(countryCode).areAdsEnabled() ? FeatureState.ENABLED : FeatureState.DISABLED;
     } catch (FeignClientException e) {
-      logger.warn(e.getMessage());
-      throw new AdsFeatureNotRetrievedException(e.getStatusCode(), e.getMessage());
+      logger.warn(e.getMessage(), e);
+      throw new AdsFeatureNotRetrievedException(e.getStatusCode(), "Could not retrieve ads feature state from external provider due to " + e.getMessage());
     }
   }
 }
